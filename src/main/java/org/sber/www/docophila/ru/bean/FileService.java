@@ -7,4 +7,6 @@ public interface FileService {
     public ResponseEntity<?> uploadFile(MultipartFile uploadfile);
 
     public ResponseEntity<?> getHistory();
+
+    public ResponseEntity<?> searchFile();
 }

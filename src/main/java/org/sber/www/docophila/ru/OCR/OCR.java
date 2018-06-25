@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OCR {
-
-    //private final String PATH = System.getProperty("user.dir") + File.separator + "UploadFiles" + File.separator;
-
     public static BufferedImage createImageFromBytes(byte[] imageData) {
         ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
         try {
@@ -37,11 +34,11 @@ public class OCR {
     public static String toOCR(BufferedImage inputFile, String language) {
         String result = new String();
         ITesseract instance = new Tesseract();
-        instance = new Tesseract();
         instance.setLanguage(language);
-        instance.setDatapath(System.getProperty("user.dir"));
+        instance.setDatapath(System.getProperty("user.dir")+File.separator + "tessdata");
         try {
             result = instance.doOCR(inputFile);
+            System.out.println(result);
 
         } catch (TesseractException e) {
             System.err.println(e.getMessage());

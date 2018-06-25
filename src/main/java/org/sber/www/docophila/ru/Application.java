@@ -1,5 +1,6 @@
 package org.sber.www.docophila.ru;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,10 @@ public class Application {
 		factory.setMaxRequestSize("4Mb");
 		return factory.createMultipartConfig();
 	}
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+
 	}
 }
