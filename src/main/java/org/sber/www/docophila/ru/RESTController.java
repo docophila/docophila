@@ -1,6 +1,7 @@
 package org.sber.www.docophila.ru;
 
-import org.sber.www.docophila.ru.bean.FileService;
+import org.sber.www.docophila.ru.service.FileService;
+import org.sber.www.docophila.ru.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/")
 public class RESTController {
 
-    @Autowired
     private FileService fileService;
+    private UserService userService;
 
+
+    @Autowired
+    RESTController(FileService fileService, UserService userService){
+        this.fileService = fileService;
+        this.userService = userService;
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
@@ -21,17 +28,20 @@ public class RESTController {
         return fileService.uploadFile(uploadfile);
     }
 
-    @GetMapping("/history")
-    public ResponseEntity<?> getHistory() {
+    @PostMapping("/users/registration")
+    public ResponseEntity<?> addUser(@RequestParam(value = "fio") String fio,
+                                     @RequestParam(value = "password") String password,
+                                     @RequestParam(value = "email") String email) {
 
-        return fileService.getHistory();
+        return userService.addUser(fio, password, email);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<?> searchFile() {
-
-        return fileService.searchFile();
+    @DeleteMapping("/users/remove")
+    public ResponseEntity<?> dellUser(@RequestParam(value = "fio") String fio,
+                                      @RequestParam(value = "password") String password) {
+        return userService.deleteUser(fio, password);
     }
+
 
     /*@ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

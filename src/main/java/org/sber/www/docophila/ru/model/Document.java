@@ -1,5 +1,4 @@
 package org.sber.www.docophila.ru.model;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,44 +7,35 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.sql.Blob;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 @Entity
 @Table(name = "DOCUMENT")
 public class Document {
-    //@Transient
-    //private static final Long serialVersionUID = 1L;
+
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "document_seq_gen")
-    //@SequenceGenerator(name = "document_seq_gen", sequenceName = "seq_document_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @NotNull
     private Long id;
 
     @NotNull
     @NotEmpty
-    @Column(name = "filename")
     private String filename;
 
-    public Document(@NotNull @NotEmpty String filename, byte[] file, Boolean inprogress) {
-        this.filename = filename;
-        this.file = file;
-        this.inprogress = inprogress;
-    }
 
     @NotNull
-    @NotEmpty
-    @Column(name = "email")
-    private String email;
+    @ManyToOne
+    private User user;
 
-    @Column(name = "file")
+    @NotNull
     private byte[] file;
 
-    @Column(name = "inprogress")
+    @NotNull
     private Boolean inprogress;
 
 }
